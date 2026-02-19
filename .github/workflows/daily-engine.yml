@@ -1,43 +1,43 @@
 name: Daily Founder Engine
 
 on:
-    schedule:
-        - cron: "30 3 * * *" # 9 AM IST (UTC+5:30) => 3:30 AM UTC
-    workflow_dispatch:
+  schedule:
+    - cron: "30 3,15 * * *" # 9 AM & 9 PM IST (UTC+5:30)
+  workflow_dispatch:
 
 permissions:
-    contents: write
+  contents: write
 
 jobs:
-    daily-update:
-        runs-on: ubuntu-latest
+  daily-update:
+    runs-on: ubuntu-latest
 
-        steps:
-            - name: Checkout Repository
-              uses: actions/checkout@v3
-              with:
-                  fetch-depth: 0 # Full history for commit counts
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # Full history for commit counts
 
-            - name: Setup Node.js
-              uses: actions/setup-node@v3
-              with:
-                  node-version: "18"
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18"
 
-            - name: Run Daily Engine
-              run: node daily-engine.js
+      - name: Run Daily Engine
+        run: node daily-engine.js
 
-            - name: Commit and Push
-              run: |
-                  git config --global user.name "Founder Daily Bot"
-                  git config --global user.email "bot@founder-daily.com"
+      - name: Commit and Push
+        run: |
+          git config --global user.name "Founder Daily Bot"
+          git config --global user.email "bot@founder-daily.com"
 
-                  # Check if there are changes
-                  if [[ -n $(git status -s) ]]; then
-                    echo "Changes detected. Committing..."
-                    TODAY=$(date +'%Y-%m-%d')
-                    git add .
-                    git commit -m "📈 Daily Engine Update - $TODAY"
-                    git push
-                  else
-                    echo "No changes to commit."
-                  fi
+          # Check if there are changes
+          if [[ -n $(git status -s) ]]; then
+            echo "Changes detected. Committing..."
+            TODAY=$(date +'%Y-%m-%d')
+            git add .
+            git commit -m "📈 Daily Engine Update - $TODAY"
+            git push
+          else
+            echo "No changes to commit."
+          fi

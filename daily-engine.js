@@ -42,15 +42,17 @@ async function runDailyEngine() {
     const today = getToday();
     console.log(`Starting Daily Engine for ${today}...`);
 
-    // 1. Prevent Duplicate Entries
+    // 1. Prevent Duplicate Entries - REMOVED to allow 2 commits/day
     let progressLog = '';
     if (fs.existsSync(CONFIG.logFile)) {
         progressLog = fs.readFileSync(CONFIG.logFile, 'utf8');
     }
     
-    // Check if today's entry already exists
-    if (progressLog.includes(`| ${today} |`)) {
-        console.log('Update for today already exists. Exiting.');
+    // We now allow multiple entries. 
+    // If you want to limit to exactly 2, we could count occurrences of today in progressLog.
+    const todayEntries = (progressLog.match(new RegExp(`\\| ${today} \\|`, 'g')) || []).length;
+    if (todayEntries >= 2) {
+        console.log('Maximum daily updates (2) reached. Exiting.');
         return;
     }
 
@@ -117,11 +119,17 @@ async function runDailyEngine() {
     const yesterday = new Date();
     yesterday.setDate(yesterday.getDate() - 1);
     
-    // Simple streak logic: if last update was yesterday, increment. If today, keep. Else reset.
-    // Since we already checked for today's entry above, we assume this is a new run.
-    const isConsecutive = lastDate.toISOString().split('T')[0] === yesterday.toISOString().split('T')[0];
+    // Streak Logic: 
+    // - If last update was yesterday, increment.
+    // - If last update was today, keep same (don't increment, don't reset).
+    // - Else reset.
+    const lastDateStr = lastDate.toISOString().split('T')[0];
+    const yesterdayStr = yesterday.toISOString().split('T')[0];
 
-    if (isConsecutive) {
+    if (lastDateStr === today) {
+        // Already updated today, just update stats, keep streak
+        console.log("Second update of the day - keeping streak.");
+    } else if (lastDateStr === yesterdayStr) {
         streakData.currentStreak += 1;
     } else {
         streakData.currentStreak = 1; // Reset or Start
