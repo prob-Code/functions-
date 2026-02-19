@@ -22,7 +22,7 @@ Since this is a new project, follow these steps to initialize and run the first 
 
 2.  **Add Your Remote (if pushing to GitHub)**
     ```bash
-    git remote add origin https://github.com/YOUR_USERNAME/founder-daily-engine.git
+    git remote add origin https://github.com/prob-Code/functions-.git
     git push -u origin main
     ```
 
