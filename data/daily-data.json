@@ -1,0 +1,23 @@
+[
+  {
+    "date": "2026-02-19",
+    "timestamp": "2026-02-19T16:58:15.976Z",
+    "weather": {
+      "time": "2026-02-19T16:45",
+      "interval": 900,
+      "temperature": 7.4,
+      "windspeed": 17.6,
+      "winddirection": 298,
+      "is_day": 1,
+      "weathercode": 51
+    },
+    "crypto": {
+      "bitcoin": {
+        "usd": 66354
+      },
+      "ethereum": {
+        "usd": 1923.82
+      }
+    }
+  }
+]
