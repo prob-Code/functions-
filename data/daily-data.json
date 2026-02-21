@@ -61,5 +61,26 @@
         "usd": 1957.25
       }
     }
+  },
+  {
+    "date": "2026-02-21",
+    "timestamp": "2026-02-21T04:50:09.398Z",
+    "weather": {
+      "time": "2026-02-21T04:45",
+      "interval": 900,
+      "temperature": 6.8,
+      "windspeed": 8.8,
+      "winddirection": 251,
+      "is_day": 0,
+      "weathercode": 0
+    },
+    "crypto": {
+      "bitcoin": {
+        "usd": 67693
+      },
+      "ethereum": {
+        "usd": 1959.38
+      }
+    }
   }
 ]
